@@ -1,74 +1,34 @@
 # -*- coding: utf-8 -*-
 
-
 import streamlit as st
-import pandas as pd
-import numpy as np
+from datetime import datetime
+from datetime import date
 
-st.write("Hello world")
+st.title("User Information")
+
+name = st.text_input("Name")
+
+min_date = date(1923, 1, 1)
+today = datetime.today()
+
+birth_date = st.date_input("Date of Birth", min_value=min_date, max_value=today)
+
+age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+
+sex = st.selectbox("Sex", ["Male", "Female", "Other"])
+
+st.text(f"Name: {name}")
+st.text(f"Age: {age}")
+st.text(f"Sex: {sex}")
 
 
-df = pd.DataFrame({
-  'first column': [1, 2, 3, 4],
-  'second column': [10, 20, 30, 40]
-})
+number1 = st.number_input("Number 1 (Min 200, Max 400)", min_value=200, max_value=400)
+number2 = st.number_input("Number 2 (Min 100, Max 200)", min_value=100, max_value=200)
 
-st.write(df)
+st.text(f"Sum is {number1+number2}")
 
+st.text(f"Multipy is {number1*number2}")
 
-dataframe = np.random.randn(5,6)
-st.dataframe(dataframe)
+st.text(f"Substract is {number1-number2}")
 
-dataframe = pd.DataFrame(
-    np.random.randn(5,6),
-    columns = ('col %d' % (i+1) for i in range(6))
-    )
-st.dataframe(dataframe.style.highlight_max(axis=0))
-
-st.table(dataframe)
-
-##Draw a line chart
-
-chart_data = pd.DataFrame(np.random.randn(20,3),columns=('a','b','c'))
-
-st.line_chart(chart_data)
-
-#Plot a map
-map_data = pd.DataFrame(
-    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
-    columns=['lat', 'lon'])
-
-st.map(map_data)
-
-#widget
-
-#slider
-x = st.slider('x')  # 👈 this is a widget
-st.write(x, 'squared is', x * x)
-
-#text input
-st.text_input("Your name", key="name")
-
-# You can access the value at any point with:
-st.session_state.name
-
-#checkbox
-if st.checkbox('Show dataframe'):
-    chart_data = pd.DataFrame(
-       np.random.randn(20, 3),
-       columns=['a', 'b', 'c'])
-
-    chart_data
-
-#selected box
-df = pd.DataFrame({
-    'first column': [1, 2, 3, 4],
-    'second column': [10, 20, 30, 40]
-    })
-
-option = st.selectbox(
-    'Which number do you like best?',
-     df['second column'])
-
-'You selected: ', option
-
+st.text(f"Divided is {number1/number2}")
